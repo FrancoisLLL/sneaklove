@@ -43,7 +43,7 @@ router.post('/signup', async (req, res, next) => {
             const securePassword = await bcrypt.hashSync(password, SALT);
             console.log(securePassword,password, SALT);
             try{
-                await User.create({name, lastname, email, securePassword});
+                await User.create({name, lastname, email, password : securePassword});
             }
             catch(e){
                 console.log(e);
