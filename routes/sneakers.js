@@ -3,6 +3,7 @@ const router = new express.Router();
 
 //////Sneakers
 router.get("/sneakers/:cat", (req, res) => {
+    
     console.log(req.params);
     Sneaker.find({
         category: req.params.cat

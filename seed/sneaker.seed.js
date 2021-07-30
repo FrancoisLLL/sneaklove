@@ -46,10 +46,11 @@ mongoose.connect(process.env.MONGO_URI, {
     })
     .catch(e => console.log(e))
 
-function insert() {
+ function insert() {
     sneakersSeed.forEach((sneaker, index, array) => {
+        
         for (let i = 0; i < sneaker.id_tag.length; i++) {
-            Tags.findOne({
+             Tags.findOne({
                     label: sneaker.id_tag[i]
                 })
                 .then(tagFound => {
