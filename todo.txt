@@ -1,0 +1,11 @@
+CREATE > François
+EDIT > François
+
+
+DISPLAY : > Florian
+- affichage des sneakers pour chaque catégorie
+- filtrage des sneakers
+- affichage d'une sneaker
+
+DELETE > Florian
+
