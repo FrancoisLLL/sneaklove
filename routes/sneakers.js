@@ -1,39 +1,54 @@
-const express = require("express");
+const express = require('express');
+const { NotExtended } = require('http-errors');
 const router = new express.Router();
-const Sneaker = require('../models/Sneaker')
-const Tags = require('../models/Tags')
-//////Sneakers
-router.get("/sneakers/:cat", async (req, res) => {
-    // console.log(req.params);
-    // Sneaker.find({
-    //     category: req.params.cat
-    //   })
-    //   .then((foundSneakers) => {
-    //     console.log(foundSneakers)
-    //     res.render("index", {foundSneakers});
-    //   })
-    //   .catch(e => console.log(e))
-    try {
-      const cat = req.params.cat
-      const sneakersToDisplay = await Sneaker.find({category: cat})
-      const tags = await Tags.find()
-      
+const Sneaker = require('../models/Sneaker');
+const Tags = require('../models/Tags');
 
-    } catch (error) {
-      console.log(error)
+//////Sneakers
+
+router.get('/sneakers/:cat', async (req, res, next) => {
+  const tags = await Tags.find();
+  try {
+    const category = req.params.cat;
+    if (category === 'collection') {
+      const sneakers = await Sneaker.find();
+      res.render('products', { sneakers, tags });
+      return;
+    } else {
+      const sneakers = await Sneaker.find({ category: category })
+        .populate('id_tag').exec();
+      
+      console.log(sneakers)
+      const includeTags = new Set()
+      sneakers.forEach((sneaker) => {
+        sneaker.id_tag.forEach( tag => {
+          includeTags.add(tag.toString())
+        })
+        
+      });
+      console.log(includeTags)
+      Array.from(includeTags)
+      console.log(includeTags)
+      res.render('products', {
+        sneakers: sneakers
+      });
+      return;
     }
-  });
-  
-  router.get("/one-product/:id", (req, res) => {
-    console.log(req.params);
-    Sneaker.findById(
-        req.params.id
-      )
-      .then((foundSneaker) => {
-        console.log(foundSneaker)
-        res.render("index");
-      })
-      .catch(e => console.log(e))
-  });
-  
-  
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+router.get('/one-product/:id', async (req, res) => {
+  try {
+    const productId = req.params.id;
+    const sneaker = await Sneaker.findById(productId);
+    res.render('one_product', {
+      sneaker,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+module.exports = router;
