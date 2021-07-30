@@ -15,8 +15,9 @@ const sneakerModel = new Schema ({
         type: [String],
         enum: ['men', 'women', 'kids']
     },
+    image: String,
     // id_tag: [{type: Schema.Types.Objectid, ref: 'tag'}],
-    id_tag: [{ type: Schema.Types.ObjectId, ref: "Style" }]
+    id_tag: [{ type: Schema.Types.ObjectId, ref: "tag" }]
 
     })
 
