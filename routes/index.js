@@ -14,7 +14,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/sneakers/:cat", (req, res) => {
-  res.send("bar");
+  res.render("index")
 });
 
 router.get("/one-product/:id", (req, res) => {
@@ -26,7 +26,7 @@ router.get("/signup", (req, res) => {
 });
 
 router.get("/signin", (req, res) => {
-  res.render("index");
+  res.render("signin");
 });
 
 
