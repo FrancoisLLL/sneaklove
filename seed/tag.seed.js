@@ -1,5 +1,5 @@
 require("dotenv").config();
-
+const mongoose = require("mongoose");
 require('../config/mongodb')
 const Tag = require('../models/Tags')
 
@@ -23,7 +23,7 @@ const tagseed = [{
 
 
 
-const mongoose = require("mongoose");
+
 
 mongoose.connect(process.env.MONGO_URI, {
         useNewUrlParser: true,
