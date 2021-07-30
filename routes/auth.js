@@ -12,7 +12,7 @@ router.get('/signup', (req, res) => {
 
 router.get('/signin', (req, res) => {
   res.render('signin');
-  console.log(req.query);
+  //console.log(req.query);
 });
 
 router.post('/signup', async (req, res) => {
@@ -21,13 +21,19 @@ router.post('/signup', async (req, res) => {
     const { firstname, lastname, email, password } = req.body;
     if (!email || !password || !firstname || !lastname) {
       res.render('/signin', {
-        errorMessage: 'You need to fill all the form',
+        msg: {
+          status: 400,
+          text: 'You need to fill all the form'
+        }
       });
     }
     const usedEmail = await User.findOne({ email: email });
     if (usedEmail) {
       res.render('/signin', {
-        errorMessage: 'Email is already taken',
+        msg: {
+          status: 400,
+          text: 'Email is already taken'
+        }
       });
     } else {
       const securePassword = await bcrypt.hashSync(password, SALT);
@@ -47,7 +53,10 @@ router.post('/signin', async (req, res) => {
     const { email, password } = req.body;
     if (!email || !password) {
       res.redirect('/signin', {
-        errorMessage: 'Wrong credentials',
+        msg: {
+          status: 400,
+          text: 'Wrong credentials'
+        }
       });
     } else {
       const validUser = await User.findOne({ email: email });
@@ -62,7 +71,10 @@ router.post('/signin', async (req, res) => {
         }
       } else {
         res.redirect('/signin', {
-          errorMessage: 'Wrong credentials',
+          msg: {
+            status: 400,
+            text: 'Wrong credentials'
+          }
         });
       }
     }
