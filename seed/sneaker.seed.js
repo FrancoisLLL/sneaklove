@@ -2,17 +2,17 @@ require("dotenv").config();
 const mongoose = require("mongoose");
 require('../config/mongodb')
 const Sneaker = require('../models/Sneaker')
+const Tags = require('../models/Tags')
 
 
-const sneakersSeed = [
-    {
-        name:'Nike' ,
+const sneakersSeed = [{
+        name: 'Nike',
         ref: 'Airmax',
         size: 42,
         description: 'Best shoes you can get',
         price: 200,
         category: ['men', 'women'],
-        id_tag: 'running'
+        id_tag: ["Running", "Basket"]
     },
     {
         name: 'Reebok',
@@ -21,8 +21,8 @@ const sneakersSeed = [
         description: 'Classic shoes',
         price: 42,
         category: ['women'],
-        id_tag: 'casual'
-        
+        id_tag: ["Casual"]
+
     },
     {
         name: 'Crocs',
@@ -31,48 +31,41 @@ const sneakersSeed = [
         description: 'Plastic shoes',
         price: 5,
         category: ['kids'],
+        id_tag: ["Casual"]
     },
 ]
 
-sneakersSeed.forEach(sneaker => {
-
-})
-
 mongoose.connect(process.env.MONGO_URI, {
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useUnifiedTopology: true
-}).then(() => {
-    // Sneaker.create(sneakseed).populate('id_tag')
-    //     .then((doc) => {
-    //         console.log('Sneaker seed created: ', doc.length)
-    //     })
-    //     .catch(e => console.log(e))
-    Sneaker.create(sneakersSeed)
-    .then(sneakers => sneakers.forEach(sneaker => {
-            let idtag = sneaker.id_tag;
-            Tag.findOne({
-                    id_tag: idtag
-                })
-                .then(tag => Sneaker.findByIdAndUpdate(sneaker.id, {
-                    id_tag: tag._id
-                }))
-                .catch(e => console.log(e))
-        }))
+        useNewUrlParser: true,
+        useCreateIndex: true,
+        useUnifiedTopology: true
+    }).then(() => {
+
+        insert();
+
+    })
     .catch(e => console.log(e))
 
+function insert() {
+    sneakersSeed.forEach((sneaker, index, array) => {
+        for (let i = 0; i < sneaker.id_tag.length; i++) {
+            Tags.findOne({
+                    label: sneaker.id_tag[i]
+                })
+                .then(tagFound => {
+                    sneaker.id_tag[i] = tagFound._id;
+                    if (i === sneaker.id_tag.length-1) {
+                        Sneaker.create(sneaker)
+                            .then((data) => console.log("data created: " + data))
+                            .catch(e => console.log(e))
+                    }
+                })
+                .catch(e => console.log(e))
+        }
+    })
+}
 
-})
-.catch(e => console.log(e))
 
 mongoose.connection.on("connected", () => console.log("yay mongodb connected :)"));
 
 mongoose.connection.on("error", () => console.log("nay db error sorry :("));
-
-
-
-
-
-    // 1) Ajouter les labels des tags dans la listes des sneakers à créer
-    // 2) Faire une loop pour remplacer les labels par les objectifs ID (find)
-    // 3) create
