@@ -12,12 +12,13 @@ const sneakerModel = new Schema ({
     description: String,
     price: Number,
     category: {
-        type: String,
+        type: [String],
         enum: ['men', 'women', 'kids']
-    }
+    },
+    id_tag: {type: [Schema.Types.Objectid], ref: 'tag'}
     })
 
 const Sneaker = mongoose.model('sneaker', sneakerModel)
 
-module.exports(Sneaker)
+module.exports = Sneaker
 
