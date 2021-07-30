@@ -6,22 +6,22 @@
   {{#if msg}}
   <p class="message {{msg.status}}">{{msg.text}}</p>
   {{/if}}
-  <form method="post" action="/foo" id="form_user">
+  <form method="post" action="/signup" id="form_user">
     <div class="form-item-wrapper flexed-item">
       <label for="firstname" class="label-ref label">Name</label>
-      <input id="firstname" type="text" class="input-text input" placeholder="Albert" required value="yo">
+      <input id="firstname" type="text" class="input-text input" placeholder="Albert" required value="yo" name="name">
     </div>
     <div class="form-item-wrapper flexed-item">
       <label for="lastname" class="label-ref label">Last Name</label>
-      <input id="lastname" type="text" class="input-text input" placeholder="Biceps" required value="gui">
+      <input id="lastname" type="text" class="input-text input" placeholder="Biceps" required value="gui" name="lastname">
     </div>
     <div class="form-item-wrapper flexed-item">
       <label for="email" class="label-ref label">Email</label>
-      <input id="email" type="email" class="input-text input" placeholder="albert.biceps@gmail.com" required value="yo@gui.com">
+      <input id="email" type="email" class="input-text input" placeholder="albert.biceps@gmail.com" required value="yo@gui.com" name="email">
     </div>
     <div class="form-item-wrapper flexed-item">
       <label for="password" class="label-ref label">Password</label>
-      <input id="password" type="password" class="input-text input" placeholder="••••••" required value="1234">
+      <input id="password" type="password" class="input-text input" placeholder="••••••" required value="1234" name="password">
     </div>
     <button class="button-primary white">Create Account</button>
   </form>
