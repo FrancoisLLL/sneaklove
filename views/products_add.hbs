@@ -1,40 +1,38 @@
 <div class="big-container product-manage-wrapper flexed-item">
-  <form action="/prod-add" method="get" class="add-product-form" enctype="multiparty/form-data">
+  <form action="/prod-add" method="post" class="add-product-form" enctype="multiparty/form-data">
     {{#if msg}}
     <p class="msg {{msg.status}}">{{msg.txt}}</p>
     {{/if}}
     <h3 class="form-title">Add sneakers to the collection</h3>
     <div class="form-item-wrapper flexed-item">
       <label for="sneaker-name" class="label-name label">Model name</label>
-      <inpuid="sneaker-name" type="text" class="input-text input" placeholder="Nike Air Max 90"
+      <input name="name" id="sneaker-name" type="text" class="input-text input" placeholder="Nike Air Max 90"
         value="air max 1">
     </div>
     <div class="form-item-wrapper flexed-item">
       <label for="sneaker-ref" class="label-ref label">Réf.</label>
-      <input id="sneaker-ref" type="text" class="input-text input" placeholder="ex: NV23498"
-        value="NV23498">
+      <input name="ref" id="sneaker-ref" type="text" class="input-text input" placeholder="ex: NV23498" value="NV23498">
     </div>
     <div class="form-item-wrapper flexed-item">
       <label for="sneaker-size" class="label-ref label">Size</label>
-      <input id="sneaker-size" 
-      type="number" class="input-text input" placeholder="ex: 37" value="42">
+      <input name="size" id="sneaker-size" type="number" class="input-text input" placeholder="ex: 37" value="42">
     </div>
     <div class="form-item-wrapper flexed-item">
       <label for="sneaker-descr" class="label-descr label">Description</label>
-      <input id="sneaker-descr" type="text" class="input-text input"
+      <input name="description" id="sneaker-descr" type="text" class="input-text input"
         placeholder="The better sneakers to run" value="foo bar baz">
     </div>
     <div class="form-item-wrapper flexed-item">
       <label for="sneaker-price" class="label-price label">Price</label>
-      <input id="sneaker-price" type="number" class="sneaker-price input" min="1" value="123">
+      <input name="price" id="sneaker-price" type="number" class="sneaker-price input" min="1" value="123">
     </div>
     <div class="form-item-wrapper flexed-item">
       <label for="sneaker-img" class="label-price label">Image</label>
-      <input id="sneaker-img" type="file" class="sneaker-price input">
+      <input name="image" id="sneaker-img" type="file" class="sneaker-price input">
     </div>
     <div class="form-item-wrapper flexed-item">
       <label for="category" class="label-main-cat label">Main category</label>
-      <select id="category" class="select" required>
+      <select name="category" id="category" class="select" required>
         <option value="-1" disabled selected>Choose a category</option>
         <option value="men">Men</option>
         <option value="women">Women</option>
@@ -50,12 +48,18 @@
   </form>
 
   <div class="add-tag-form">
+    <form action="/tag-add" method="post" enctype="multiparty/form-data">
+    {{#if msg}}
+    <p class="msg {{msg.status}}">{{msg.txt}}</p>
+    {{/if}}
+
     <p id="add-tag-message" class="msg"></p>
     <h3 class="form-title">Add tags</h3>
     <div class="form-item-wrapper flexed-item">
       <label for="category-name" class="category-name label">Sneaker tag</label>
-      <input id="new_tag_name" type="text" class="input" placeholder="ex: Gangsta">
+      <input name = "label" id="new_tag_name" type="text" class="input" placeholder="ex: Gangsta">
     </div>
     <button id="btn_new_tag" class="button-primary add-category-btn">Create this category</button>
+    </form>
   </div>
 </div>
